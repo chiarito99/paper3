@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import math
-from env import Env
 from sympy import false
 class Plotting:
     def __init__(self, name, xlim=[-100,100], ylim=[-100,100], is_grid=True):

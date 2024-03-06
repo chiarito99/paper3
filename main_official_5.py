@@ -7,10 +7,9 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 from Plotting5 import Plotting
-from env1copy import Env1
+from env import Env
 from sklearn.metrics import jaccard_score
-from sweep_line_has_bad_copy import getConvexPolygon,computeWLofCamera,getOpSweep
-from intersect_Finding_1 import *
+from intersect_Finding_1 import * 
 
 global flag,err1,err2,cons,a,f1,f2,vleader
 class LeaderUAV:
@@ -26,7 +25,6 @@ class LeaderUAV:
         self.ao = 3.0
         self.bo = 4.0
         self.do = 1.5
-
 
     def move_to_goal(self, goal):
         dm = math.sqrt((goal[0]-self.pos[0])**2 + (goal[1]-self.pos[1])**2)
@@ -177,6 +175,11 @@ def plot_obstacles(ox, oy, oz, r):
     x_grid = r*np.cos(theta_grid) + ox
     y_grid = r*np.sin(theta_grid) + oy
     return x_grid,y_grid,z_grid
+
+def computeWLofCamera(height, alpha, beta):
+    w = 2*height*np.tan(alpha/2)
+    l = 2*height*np.tan(beta/2)
+    return w, l
 
 def giaiPTBac2(a, b, c):
     delta = b * b - 4 * a * c
@@ -335,7 +338,7 @@ if __name__ == "__main__":
 
     path1.insert(0,[x_start,y_start])
     # print(pathc)
-    map1 = Env1([x_start,y_start],[x_end,y_end],resolution*5/3,path1)
+    map1 = Env([x_start,y_start],[x_end,y_end],resolution*5/3,path1)
     # mapc = Env1([x_start,y_start],[x_end,y_end],resolution*3/5,pathc)
     K2.append(K2[0])
     ox2 ,oy2 = zip(*K2)
@@ -343,7 +346,7 @@ if __name__ == "__main__":
     for i in range(len(b_path[0])):
         path2.append([b_path[0][i],b_path[1][i]])
     path2.append(K2[0])
-    map2 = Env1([x_start,y_start],[x_end,y_end],4.1,path2)
+    map2 = Env([x_start,y_start],[x_end,y_end],4.1,path2)
 
     casee = 0
     min = 11
@@ -386,7 +389,6 @@ if __name__ == "__main__":
             follower3 = FollowerUAV(pos=follower3.pos,leader=leader, delta=[-2*offsetx, -2*offsety],wp = path1)
             follower4 = FollowerUAV(pos=follower4.pos,leader=leader, delta=[-2*offsetx, 2*offsety],wp = path1)
             casee = 4
-
         if casee == 4:
             ref1 = map1.traj[:,i]
         elif casee == 5:
@@ -424,7 +426,7 @@ if __name__ == "__main__":
             for i in range(len(c_path[0])):
                 path1.append([c_path[0][i],c_path[1][i]])
             path1.append([x_end,y_end])
-            map1 = Env1([x_start,y_start],[x_end,y_end],16,path1)
+            map1 = Env([x_start,y_start],[x_end,y_end],16,path1)
             len_map1 = len(map1.traj[0])
             casee = 1
 
@@ -444,7 +446,7 @@ if __name__ == "__main__":
                     for i in range(len(d_path[0])):
                         path1.append([d_path[0][i],d_path[1][i]])
                     path1.append([x_end,y_end])
-                    map1 = Env1([x_start,y_start],[x_end,y_end],(resolution*5/3+16)/2,path1)
+                    map1 = Env([x_start,y_start],[x_end,y_end],(resolution*5/3+16)/2,path1)
                     len_map1 = len(map1.traj[0])
                     casee = 2
         else:
@@ -457,7 +459,7 @@ if __name__ == "__main__":
             for i in range(len(e_path[0])):
                 path1.append([e_path[0][i],e_path[1][i]])
             path1.append([x_end,y_end])
-            map1 = Env1([x_start,y_start],[x_end,y_end],resolution*5/3,path1)
+            map1 = Env([x_start,y_start],[x_end,y_end],resolution*5/3,path1)
             len_map1 = len(map1.traj[0])
             check_wp_break = 0
             print(len_map1)
@@ -484,9 +486,9 @@ if __name__ == "__main__":
         else:
             flag = 0
 
-    plot= Plotting("formation")
-    plot.plot_animation(leader_p,follower1_p,follower2_p,follower3_p,follower4_p,ox, oy,x_start,y_start,x_end,y_end,length,width)
-    plt.show()
+    # plot= Plotting("formation")
+    # plot.plot_animation(leader_p,follower1_p,follower2_p,follower3_p,follower4_p,ox, oy,x_start,y_start,x_end,y_end,length,width)
+    # plt.show()
  
     
     # Plotting

@@ -227,18 +227,15 @@ def recursive(points):
             print('b', b)
             a.append(a[0])
             recursive(b)
-            # cp.Find_intersect(a)
-
         else:
             print('a', a)
             print('b', b)
             b.append(b[0])
             recursive(a)
-            # cp.Find_intersect(b)
         oxa,oya= zip(*a)
-        plt.plot(oxa, oya )
+        # plt.plot(oxa, oya )
         oxb,oyb= zip(*b)
-        plt.plot(oxb, oyb )
+        # plt.plot(oxb, oyb )
     else:
         print('a', a)
         print('b', b)
@@ -263,4 +260,5 @@ ox,oy= zip(*K2)
 
 print(ox,oy)
 recursive(points)
+
 plt.show()
